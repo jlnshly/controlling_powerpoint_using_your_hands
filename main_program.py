@@ -30,4 +30,17 @@ def count_fingers(hand_landmarks):
 
     return raised_fingers
 
+while True:
+
+    ret, frame = video_capture.read()
+    if not ret:
+        break
+
+    frame = cv2.flip(frame, 1)
+    rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    results = user_hands.process(rgb_image)
+    current_time = time.time()
+
+
+
 
