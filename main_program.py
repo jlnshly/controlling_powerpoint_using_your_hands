@@ -41,6 +41,46 @@ while True:
     results = user_hands.process(rgb_image)
     current_time = time.time()
 
+    if results.multi_hand_landmarks:
+
+        hand = results.multi_hand_landmarks[0]
+
+        mp_draw.draw_landmarks(frame, hand, mp_hands.hand_connections)
+
+        finger_count = count_fingers(hand)
+
+        if current_time - prev_action_time > cooldown_time:
+
+            if finger_count == 1:
+                pyautogui.press("right")
+                status_text = "Next slide"
+
+            elif finger_count == 2:
+                pyautogui.press("left")
+                status_text = "Previous slide"
+
+            elif finger_count == 3:
+                pyautogui.press("f5")
+                status_text = "Start slideshow"
+
+            elif finger_count == 4:
+                pyautogui.press("esc")
+                status_text = "Exit slideshow"
+
+            elif finger_count == 5:
+                pyautogui.press("alt", "f4")
+                status_text = "Close powerpoint"
+
+            else:
+                status_text = "Waiting for gesture..."
+
+            prev_action_time = current_time
+
+        else:
+            status_text = "Waiting for hand..."
+
+            
+
 
 
 
