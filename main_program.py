@@ -79,7 +79,21 @@ while True:
         else:
             status_text = "Waiting for hand..."
 
-            
+        cv2.put_text(frame, status_text,
+                    (20,40),
+                    cv2.font_hershey_simplex,
+                    1,
+                    (0,255,255),
+                    2)
+
+        if results.multi_hand_landmarks:
+            cv2.put_text(frame,f"Fingers: {finger_count}",
+                         (20,80),
+                         cv2.font.hershey_simplex,
+                         1,
+                         (0,255,0),
+                         2)
+
 
 
 
