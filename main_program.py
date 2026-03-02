@@ -94,6 +94,13 @@ while True:
                          (0,255,0),
                          2)
 
+        cv2.imshow("Hand Controlled Powerpoint", frame)
+
+        if cv2.wait_key(1) & 0xFF == 27:
+            break
+
+video_capture.release()
+cv2.destroy_all_windows()
 
 
 
