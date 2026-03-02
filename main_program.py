@@ -16,4 +16,18 @@ prev_action_time = 0
 cooldown_time = 1.0
 status_text = "Waiting for gesture..."
 
+def count_fingers(hand_landmarks):
+
+    finger_tips = [8, 12, 16, 20]
+    raised_fingers = 0
+
+    for tip in finger_tips:
+        if hand_landmarks.landmark[tip].y < hand_landmarks.landmark[tip -2].y:
+            raised_fingers += 1
+
+    if hand_landmarks.landmarks[4].x < hand_landmarks.landmarks[3].x:
+        raised_fingers += 1
+
+    return raised_fingers
+
 
