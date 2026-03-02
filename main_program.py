@@ -3,14 +3,14 @@ import mediapipe as mp
 import pyautogui
 import time
 
-mp_hands = mp.solutions.user_hands
-user_hands = mp_hands.Hands(
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(
     max_num_hands=1,
     min_detection_confidence=0.7,
 )
 mp_draw = mp.solutions.drawing_utils
 
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.video_capture(0)
 
 prev_action_time = 0
 cooldown_time = 1.0
@@ -37,8 +37,8 @@ while True:
         break
 
     frame = cv2.flip(frame, 1)
-    rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = user_hands.process(rgb_image)
+    rgb_image = cv2.cvt_color(frame, cv2.COLOR_BGR2RGB)
+    results = hands.process(rgb_image)
     current_time = time.time()
 
     if results.multi_hand_landmarks:
@@ -79,28 +79,18 @@ while True:
         else:
             status_text = "Waiting for hand..."
 
-        cv2.put_text(frame, status_text,
-                    (20,40),
-                    cv2.font_hershey_simplex,
-                    1,
-                    (0,255,255),
-                    2)
+        cv2.putText(frame, status_text, (20,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255), 2)
 
         if results.multi_hand_landmarks:
-            cv2.put_text(frame,f"Fingers: {finger_count}",
-                         (20,80),
-                         cv2.font.hershey_simplex,
-                         1,
-                         (0,255,0),
-                         2)
+            cv2.putText(frame,f"Fingers: {finger_count}", (20,80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
 
         cv2.imshow("Hand Controlled Powerpoint", frame)
 
-        if cv2.wait_key(1) & 0xFF == 27:
+        if cv2.waitKey(1) & 0xFF == 27:
             break
 
 video_capture.release()
-cv2.destroy_all_windows()
+cv2.destroyAllWindows()
 
 
 
