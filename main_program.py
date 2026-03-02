@@ -12,5 +12,8 @@ mp_draw = mp.solutions.drawing_utils
 
 video_capture = cv2.VideoCapture(0)
 
+prev_action_time = 0
+cooldown_time = 1.0
+status_text = "Waiting for gesture..."
 
 
